@@ -5,6 +5,16 @@ import Button from "../../components/UI/Button";
 import ErrorAlert from "../../components/error-alert/ErrorAlert";
 import { useRouter } from "next/router";
 import useSWR from "swr";
+import Head from "next/head";
+
+const HeadComponent = ({ month, year }) => {
+  return (
+    <Head>
+      <title>Filtered Events</title>
+      <meta name="description" content={`All events for ${month}/${year}`} />
+    </Head>
+  );
+};
 
 export default function FilteredEventsPage() {
   const router = useRouter();
@@ -31,7 +41,13 @@ export default function FilteredEventsPage() {
 
   const filterData = router.query.slug;
 
-  if (!events || !filterData) return <p className="center">Loading...</p>;
+  if (!events || !filterData)
+    return (
+      <>
+        <HeadComponent month={month} year={year} />
+        <p className="center">Loading...</p>
+      </>
+    );
 
   const year = +filterData[0];
   const month = +filterData[1];
@@ -47,6 +63,7 @@ export default function FilteredEventsPage() {
   ) {
     return (
       <>
+        <HeadComponent month={month} year={year} />
         <ErrorAlert>
           <p>Invalid filter. Please adjust your values!</p>
         </ErrorAlert>
@@ -67,6 +84,7 @@ export default function FilteredEventsPage() {
   if (!filteredEvents || filteredEvents.length === 0)
     return (
       <>
+        <HeadComponent month={month} year={year} />
         <ErrorAlert>
           <p>No events found for the chosen filter!</p>
         </ErrorAlert>
@@ -80,6 +98,7 @@ export default function FilteredEventsPage() {
 
   return (
     <>
+      <HeadComponent month={month} year={year} />
       <ResultsTitle date={date} />
       <EventList events={filteredEvents} />
     </>

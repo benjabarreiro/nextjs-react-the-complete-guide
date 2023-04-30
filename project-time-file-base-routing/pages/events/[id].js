@@ -2,8 +2,8 @@ import React from "react";
 import EventSummary from "../../components/event-detail/EventSummary";
 import EventLogistics from "../../components/event-detail/EventLogistics";
 import EventContent from "../../components/event-detail/EventContent";
-import ErrorAlert from "../../components/error-alert/ErrorAlert";
 import { getEventById, getFeaturedEvents } from "../../helpers/api-util";
+import Head from "next/head";
 
 export default function EventDetailPage({ event }) {
   if (!event)
@@ -15,6 +15,13 @@ export default function EventDetailPage({ event }) {
 
   return (
     <>
+      <Head>
+        <title>{event.title}</title>
+        <meta
+          name="description"
+          content={`The Event ${event.title} page with all its information`}
+        />
+      </Head>
       <EventSummary title={event.title} />
       <EventLogistics
         date={event.date}
