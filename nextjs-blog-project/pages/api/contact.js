@@ -24,7 +24,7 @@ async function handler(req, res) {
     let client;
     try {
       client = await MongoClient.connect(
-        `mongodb+srv://${process.env.USERNAME}:${process.env.PASSWORD}@cluster0.uarebit.mongodb.net/events?retryWrites=true&w=majority`
+        `mongodb+srv://${process.env.USERNAME}:${process.env.PASSWORD}@${process.env.CLUSTER}.uarebit.mongodb.net/${process.env.DB}?retryWrites=true&w=majority`
       );
     } catch (err) {
       res.status(500).json({ message: "Could not connect to database." });
